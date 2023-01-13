@@ -17,3 +17,13 @@
 		width: 100%;
 	}
 }
+
+/*==========================
+		width for 400
+============================*/
+@media screen and (max-width: 400px) {
+	
+	.fromtable {
+		width: 280px;
+	}
+}
