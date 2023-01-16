@@ -26,3 +26,16 @@
 .regtable {
 	width: 50%;
 }
+
+.card-body .table img{
+	width: 80px;
+}
+.table {
+	text-align:center;
+}
+/*.card-body .table td {
+	padding: 60px 0;
+}
+.card-body .table td > img {
+	padding:0;
+}*/
