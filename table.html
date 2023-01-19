@@ -37,8 +37,8 @@
 						      	<td><img src="./assects/media/img/dammy.jpg" alt="users photo"></td>
 						      	<td>
 						      		<button class="btn btn-info btn-sm">Edit</button>
-						      		<button class="btn btn-warning btn-sm">View</button>
-						      		<button class="btn btn-danger btn-sm">Delete</button>
+						      		<a href="./profile.html" class="btn btn-warning btn-sm">View</a>
+						      		<button class="delete_btn btn btn-danger btn-sm">Delete</button>
 						      	</td>
 					    	</tr>
 					    	<tr>
@@ -49,8 +49,8 @@
 						      	<td><img src="./assects/media/img/dammy.png" alt="users photo"></td>
 						      	<td>
 						      		<button class="btn btn-info btn-sm">Edit</button>
-						      		<button class="btn btn-warning btn-sm">View</button>
-						      		<button class="btn btn-danger btn-sm">Delete</button>
+						      		<a href="./profile.html" class="btn btn-warning btn-sm">View</a>
+						      		<button class="delete_btn btn btn-danger btn-sm">Delete</button>
 						      	</td>
 					    	</tr>
 
@@ -62,8 +62,8 @@
 						      	<td><img src="./assects/media/img/dammy1.png" alt="users photo"></td>
 						      	<td>
 						      		<button class="btn btn-info btn-sm">Edit</button>
-						      		<button class="btn btn-warning btn-sm">View</button>
-						      		<button class="btn btn-danger btn-sm">Delete</button>
+						      		<a href="./profile.html" class="btn btn-warning btn-sm">View</a>
+						      		<button class="delete_btn btn btn-danger btn-sm">Delete</button>
 						      	</td>
 					    	</tr>
 
@@ -75,8 +75,8 @@
 						      	<td><img src="./assects/media/img/users/pallab.JPG" alt="users photo"></td>
 						      	<td>
 						      		<button class="btn btn-info btn-sm">Edit</button>
-						      		<button class="btn btn-warning btn-sm">View</button>
-						      		<button class="btn btn-danger btn-sm">Delete</button>
+						      		<a href="./profile.html" class="btn btn-warning btn-sm">View</a>
+						      		<button class="delete_btn btn btn-danger btn-sm">Delete</button>
 						      	</td>
 					    	</tr>
 					  	</tbody>
@@ -88,10 +88,27 @@
 	</div>
 
 	<!-- bootstrap 5 -->
+
+	<script src="./assects/js/jquery-3.6.3.min.js" type="text/javascript"></script>
 	<script src="./assects/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<script src="./assects/js/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 	<script src="./assects/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
+	<script type="text/javascript">
+		
+		jQuery('.delete_btn').click(function(){
+
+			let	conf = confirm("Are you sure ? ");
+
+			if(conf = true) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		});
+
+	</script>
 
 </body>
 </html>
