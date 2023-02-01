@@ -8,6 +8,7 @@
 	
 	<!-- bootstrap 5 -->
 	<link href="./assects/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="./assects/css/cropper.min.css">
 
 	<!-- Responsive css -->
 	<link rel="stylesheet" href="./assects/css/responsive.css">
@@ -53,7 +54,7 @@
 							    	<label for="imgfile" class="col-form-label">Upload your Photo</label>
 							  	</div>
 							  	<div class="col-auto">
-							    	<input type="file" id="imgfile" class=" fileimg form-control" aria-describedby="fileHelpInline">
+							    	<input type="file" id="imgfile" class=" image fileimg form-control" aria-describedby="fileHelpInline">
 							  	</div>
 							  	<div class="col-auto">
 							    	<span id="fileHelpInline" class="form-text">
@@ -62,13 +63,45 @@
 							  	</div>
 							</div>
 							<div class="photo border m-3 p-3">
-								<img class="livephoto border" src="./assects/media/img/dammy.png" alt="Dammy Pic">
+								<img class="livephoto  border" src="./assects/media/img/dammy.png" alt="Dammy Pic">
 							</div>
 						</div>
 						<!-- <input class="mt-3 btn btn-primary" type="submit" value="Sign up"> -->
 						<a href="./table.html" class="mt-3 btn btn-primary">Sign up</a>
 					</form>
-					
+
+
+					<!-- corpper model -->
+			 		<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+			            <div class="modal-dialog modal-lg" role="document">
+			                <div class="modal-content">
+			                    <div class="modal-header">
+			                        <h5 class="modal-title" id="modalLabel">Crop image</h5>
+			                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			                    </div>
+			                    <div class="modal-body">
+			                        <div class="img-container">
+			                            <div class="row">
+			                                <div class="col-md-8">  
+			                                    <!--  default image where we will set the src via jquery-->
+			                                    <img id="image">
+			                                </div>
+			                                <div class="col-md-4">
+			                                    <div class="preview"></div>
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </div>
+			                    <div class="modal-footer">
+			                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			                        <button type="button" class="btn btn-primary" id="crop">Crop</button>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+
+					<!-- cropper model end -->
+
 				</div>
 				<div class="card-footer">
 					<a href="./index.html">I've already account. Let me log.</a>
@@ -83,11 +116,89 @@
 	<script src="./assects/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 	<script src="./assects/js/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 	<script src="./assects/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+	
+	<!-- cropper js -->
+	<script src="./assects/js/cropper.min.js"></script>
+	
+	<!-- main script -->
 	<script type="text/javascript">
-		jQuery('.fileimg').change(function(e){
-			let url = URL.createObjectURL(e.target.files[0]);
-			jQuery(".livephoto").attr('src',url);
-		});
+
+
+		// photo upload
+		// jQuery('.fileimg').change(function(e){
+		// 	let url = URL.createObjectURL(e.target.files[0]);
+		// 	jQuery(".livephoto").attr('src',url);
+		// });
+
+	// cropper start
+    var bs_modal = $('#modal');
+    var image = document.getElementById('image');
+    var cropper,reader,file;
+   
+
+    $("body").on("change", ".image", function(e) {
+        var files = e.target.files;
+        var done = function(url) {
+            image.src = url;
+            bs_modal.modal('show');
+        };
+
+
+        if (files && files.length > 0) {
+            file = files[0];
+
+            if (URL) {
+                done(URL.createObjectURL(file));
+            } else if (FileReader) {
+                reader = new FileReader();
+                reader.onload = function(e) {
+                    done(reader.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    bs_modal.on('shown.bs.modal', function() {
+        cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 3,
+            preview: '.preview'
+        });
+    }).on('hidden.bs.modal', function() {
+        cropper.destroy();
+        cropper = null;
+    });
+
+    $("#crop").click(function() {
+        canvas = cropper.getCroppedCanvas({
+            width: 160,
+            height: 160,
+        });
+
+    //     canvas.toBlob(function(blob) {
+    //         url = URL.createObjectURL(blob);
+    //         var reader = new FileReader();
+    //         reader.readAsDataURL(blob);
+    //         reader.onloadend = function() {
+    //             var base64data = reader.result;
+				// //alert(base64data);
+    //             $.ajax({
+    //                 type: "POST",
+    //                 dataType: "json",
+    //                 url: "crop_image_upload.php",
+    //                 data: {image: base64data},
+    //                 success: function(data) { 
+    //                     bs_modal.modal('hide');
+    //                     alert("success upload image");
+    //                 }
+    //             });
+    //         };
+    //     });
+    });
+
+    // cropper end
+
 	</script>
 
 </body>
